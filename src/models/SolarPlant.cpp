@@ -11,5 +11,5 @@ double SolarPlant::getAvailablePower(){
 }
 
 string SolarPlant::getType(){
-    return "Solar ☀️";
+    return "Solar";
 }

@@ -16,5 +16,5 @@ double WindFarm::getAvailablePower(){
 }
 
 string WindFarm::getType(){
-    return "Wind 💨";
+    return "Wind";
 }

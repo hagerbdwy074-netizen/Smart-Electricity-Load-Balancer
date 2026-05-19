@@ -88,7 +88,7 @@ void SmartLoadBalancer::balanceLoad() {
     if (totalRenewable >= totalDemand) {
         double excess = totalRenewable - totalDemand;
         setColor(GREEN);
-        cout << "\n✅ Renewables cover everything!\n";
+        cout << "\n Renewables cover everything!\n";
         cout << "Excess power: " << excess << " kW → charging battery\n";
         setColor(RESET);
         battery->charge(excess);
@@ -96,7 +96,7 @@ void SmartLoadBalancer::balanceLoad() {
     else {
         double deficit = totalDemand - totalRenewable;
         setColor(YELLOW);
-        cout << "\n⚠️ Deficit: " << deficit << " kW\n";
+        cout << "\nDeficit: " << deficit << " kW\n";
         cout << "Trying battery...\n";
         setColor(RESET);
 
@@ -105,17 +105,17 @@ void SmartLoadBalancer::balanceLoad() {
 
         if (remainingDeficit <= 0) {
             setColor(GREEN);
-            cout << "✅ Battery covered the deficit!\n";
+            cout << "Battery covered the deficit!\n";
             setColor(RESET);
         } else {
             setColor(RED);
-            cout << "\n🚨 EMERGENCY! Need " << remainingDeficit << " kW. Starting smart load shedding...\n";
+            cout << "\nEMERGENCY! Need " << remainingDeficit << " kW. Starting smart load shedding...\n";
             setColor(RESET);
 
             for (auto c : Consumers) {
                 if (c->getPriority() == priority::Normal && remainingDeficit > 0) {
                     setColor(RED);
-                    cout << "❌ Disconnecting (Normal Priority): " << c->name
+                    cout << " Disconnecting (Normal Priority): " << c->name
                          << " (Saved " << c->getPowerDemand() << " kW)\n";
                     setColor(RESET);
 
@@ -127,7 +127,7 @@ void SmartLoadBalancer::balanceLoad() {
             for (auto c : Consumers) {
                 if (c->getPriority() == priority::Middle && remainingDeficit > 0) {
                     setColor(RED);
-                    cout << "❌ Disconnecting (Middle Priority): " << c->name
+                    cout << " Disconnecting (Middle Priority): " << c->name
                          << " (Saved " << c->getPowerDemand() << " kW)\n";
                     setColor(RESET);
 
@@ -138,7 +138,7 @@ void SmartLoadBalancer::balanceLoad() {
 
             if (remainingDeficit > 0) {
                 setColor(RED);
-                cout << "🚨 CRITICAL: Even after cutting off normal and middle sectors, we still lack "
+                cout << " CRITICAL: Even after cutting off normal and middle sectors, we still lack "
                      << remainingDeficit << " kW from Main Grid!\n";
                 setColor(RESET);
             }
