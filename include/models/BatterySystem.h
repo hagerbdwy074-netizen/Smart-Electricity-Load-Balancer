@@ -1,8 +1,10 @@
 #ifndef BATTERYSYSTEM_H
 #define BATTERYSYSTEM_H
-#include "Common.h"
+
+#include <iostream>
+
 class BatterySystem {
-private:
+protected:
     double MaxCapacity;
     double CurrentCharge;
 
@@ -11,7 +13,10 @@ public:
 
     void charge(double amount);
     double discharge(double needed);
-    double getChargeLevel();
+    double getChargeLevel() const;
+    double getMaxCapacity() const;
+
+    void printProgressBar() const;
 };
 
 #endif

@@ -9,6 +9,7 @@ enum class ConnectionStatus {
     Connected,
     Disconnected
 };
+
 #define RESET   "\033[0m"
 #define CYAN    "\033[36m"
 #define YELLOW  "\033[33m"
@@ -19,9 +20,5 @@ enum class ConnectionStatus {
 #define WHITE   "\033[97m"
 
 #include <iostream>
-inline void setColor(const std::string& colorCode) {
-    std::cout << colorCode;
-}
-inline void setColor(const char* colorCode) {
-    std::cout << colorCode;
-}
+inline void setColor(const char* colorCode) { std::cout << colorCode; }
+inline void setColor(const std::string& colorCode) { std::cout << colorCode; }
