@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
+#include "Common.h"
 
+// hack to access private for demo
 #define private public
 #include "SmartLoadBalancer.h"
 #undef private
@@ -11,54 +13,97 @@
 
 using namespace std;
 
-int main() {
-    cout << "Smart Electricity Load Balancer Configuration\n";
-    cout << "---------------------------------------------\n";
+void printTitle() {
+    setColor(MAGENTA);
+    cout << "============================================\n";
+    cout << CYAN << "   Smart Electricity Load Balancer Demo\n" << MAGENTA;
+    cout << "============================================\n";
+    setColor(RESET);
+    cout << "This program simulates load balancing between\n";
+    cout << "solar/wind energy, battery backup, and consumers\n";
+    cout << endl;
+    setColor(CYAN);
+    cout << "[You will enter system data step by step.]\n";
+    setColor(RESET);
+}
 
+void waitForEnter() {
+    setColor(WHITE);
+    cout << endl << "Press Enter to continue ..." << endl;
+    setColor(RESET);
+    cin.ignore();
+    cin.get();
+}
+
+int main() {
+    printTitle();
+    // 1. Battery setup
     double batMax, batInit;
+    setColor(YELLOW);
     cout << "[Battery System Setup]\n";
-    cout << "Enter Max Capacity (kW): ";
+    setColor(WHITE); cout << " - Maximum Capacity (kWh): "; setColor(RESET);
     cin >> batMax;
-    cout << "Enter Initial Charge (kW): ";
+    setColor(WHITE); cout << " - Initial Charge (kWh): "; setColor(RESET);
     cin >> batInit;
-    
     BatterySystem* battery = new BatterySystem(batMax, batInit);
 
+    // 2. Create SmartLoadBalancer object
     SmartLoadBalancer balancer(battery);
 
-    // 3. Gather Solar Plant Data
+    waitForEnter();
+
+    // 3. Solar Plant setup
     string solarName;
     double solarMax, solarSun;
-    cout << "\n[Solar Plant Setup]\n";
-    cout << "Enter Name (single word): ";
+    setColor(BCYAN);
+    cout << "[Solar Plant Setup]\n";
+    setColor(WHITE); cout << " - Name: "; setColor(RESET);
     cin >> solarName;
-    cout << "Enter Max Capacity (kW): ";
+    setColor(WHITE); cout << " - Maximum Output (kW): "; setColor(RESET);
     cin >> solarMax;
-    cout << "Enter Sun Intensity: ";
+    setColor(WHITE); cout << " - Sun Intensity [0~1]: "; setColor(RESET);
     cin >> solarSun;
-    
     SolarPlant* solar = new SolarPlant(solarName, solarMax, solarSun);
 
+    // 4. Wind Farm setup
     string windName;
-    double windMax, windWind;
-    cout << "\n[Wind Farm Setup]\n";
-    cout << "Enter Name (single word): ";
+    double windMax, windSpeed;
+    setColor(BCYAN);
+    cout << "[Wind Farm Setup]\n";
+    setColor(WHITE); cout << " - Name: "; setColor(RESET);
     cin >> windName;
-    cout << "Enter Max Capacity (kW): ";
+    setColor(WHITE); cout << " - Maximum Output (kW): "; setColor(RESET);
     cin >> windMax;
-    cout << "Enter Wind Speed: ";
-    cin >> windWind;
-    
-    WindFarm* wind = new WindFarm(windName, windMax, windWind);
+    setColor(WHITE); cout << " - Wind Speed (m/s): "; setColor(RESET);
+    cin >> windSpeed;
+    WindFarm* wind = new WindFarm(windName, windMax, windSpeed);
 
     balancer.Sources.push_back(solar);
     balancer.Sources.push_back(wind);
 
+    waitForEnter();
+
+    // 5. Consumer setup (optional improvement idea)
+    setColor(YELLOW);
+    cout << "[Add consumers in code for more realism]\n";
+    setColor(RESET);
+
+    // 6. Show system status
     balancer.showStatus();
+
+    waitForEnter();
+
+    // 7. Perform load balancing
+    balancer.balanceLoad();
+
+    waitForEnter();
+
+    setColor(GREEN);
+    cout << "Simulation finished. Thank you for using the Smart Load Balancer!\n";
+    setColor(RESET);
 
     delete solar;
     delete wind;
     delete battery;
-
     return 0;
 }

@@ -1,7 +1,8 @@
 #include"BatterySystem.h"
 #include<iostream>
-#include<string> 
+#include<string>
 #include<algorithm>
+#include"Common.h"
 using namespace std;
 
 BatterySystem::BatterySystem(double max, double initial) {
@@ -11,9 +12,9 @@ BatterySystem::BatterySystem(double max, double initial) {
 
 void BatterySystem::charge(double amount) {
     double before = CurrentCharge;
-
     CurrentCharge = min(CurrentCharge + amount, MaxCapacity);
 
+    setColor(GREEN);
     cout << "🔋 Battery charged +"
          << (CurrentCharge - before)
          << " kWh → Level: "
@@ -21,21 +22,23 @@ void BatterySystem::charge(double amount) {
          << "/"
          << MaxCapacity
          << " kWh\n";
+    setColor(RESET);
 }
-
 
 double BatterySystem::discharge(double needed) {
     double available = min(needed, CurrentCharge);
 
     CurrentCharge -= available;
 
-    cout << "🔋 Battery discharged -"
+    setColor(YELLOW);
+    cout << "Battery discharged -"
          << available
          << " kWh → Level: "
          << CurrentCharge
          << "/"
          << MaxCapacity
          << " kWh\n";
+    setColor(RESET);
 
     return available;
 }
