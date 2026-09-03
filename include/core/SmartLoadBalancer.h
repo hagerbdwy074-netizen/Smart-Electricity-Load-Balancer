@@ -1,8 +1,7 @@
 #ifndef SMARTLOADBALANCER_H
 #define SMARTLOADBALANCER_H
 
-#include<vector>
-using namespace std;
+#include <vector>
 
 class IEnergySource;
 class IConsumer;
@@ -10,8 +9,8 @@ class BatterySystem;
 
 class SmartLoadBalancer {
 private:
-    vector<IEnergySource*> Sources;
-    vector<IConsumer*> Consumers;
+    std::vector<IEnergySource*> Sources;
+    std::vector<IConsumer*> Consumers;
     BatterySystem* battery;
 
 public:
